@@ -1,6 +1,6 @@
 #include <Geode/Geode.hpp>
-#include <alphalaneous.alphas_geode_utils/include/NodeModding.h>
-#include <alphalaneous.alphas_geode_utils/include/Utils.h>
+#include <alphalaneous.alphas_geode_utils/include/ObjectModify.hpp>
+#include <alphalaneous.alphas_geode_utils/include/Utils.hpp>
 
 using namespace geode::prelude;
 
