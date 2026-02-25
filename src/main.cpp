@@ -101,7 +101,7 @@ void modifyButtons(CCNode* node) {
             child->setUserObject("checked"_spr, CCBool::create(true));
             
             if (std::find(g_exclusions.begin(), g_exclusions.end(), child->getID()) != g_exclusions.end()) continue;
-            if (std::find(g_exclusionsClass.begin(), g_exclusionsClass.end(), AlphaUtils::Cocos::getClassName(child)) != g_exclusionsClass.end()) continue;
+            if (std::find(g_exclusionsClass.begin(), g_exclusionsClass.end(), typeid(*child).name()) != g_exclusionsClass.end()) continue;
 
             if (typeinfo_cast<geode::MDPopup*>(child)) {
                 continue;
@@ -129,6 +129,20 @@ void modifyButtons(CCNode* node) {
     }
 }
 
+// stolen from old alpha utils
+#define public_cast(value, member) [](auto* v) { \
+    class FriendClass__; \
+    using T = std::remove_pointer<decltype(v)>::type; \
+    class FriendeeClass__: public T { \
+    protected: \
+        friend FriendClass__; \
+    }; \
+    class FriendClass__ { \
+    public: \
+        auto& get(FriendeeClass__* v) { return v->member; } \
+    } c; \
+    return c.get(reinterpret_cast<FriendeeClass__*>(v)); \
+}(value)
 
 class SceneHandler : public CCNode {
 public:
